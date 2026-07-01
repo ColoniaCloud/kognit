@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* ── Colour ── */
+  --background:             180 33% 98%;
+  --foreground:             188 60% 12%;
+
+  --card:                   0 0% 100%;
+  --card-foreground:        188 60% 12%;
+
+  --popover:                0 0% 100%;
+  --popover-foreground:     188 60% 12%;
+
+  --primary:                174 72% 42%;
+  --primary-foreground:     0 0% 100%;
+  --primary-glow:           158 70% 60%;
+
+  --accent:                 152 65% 65%;
+  --accent-foreground:      188 60% 12%;
+
+  --secondary:              180 40% 95%;
+  --secondary-foreground:   188 60% 18%;
+
+  --muted:                  180 25% 94%;
+  --muted-foreground:       188 20% 42%;
+
+  --destructive:            8 78% 58%;
+  --destructive-foreground: 0 0% 100%;
+
+  --warning:                28 90% 58%;
+  --warning-foreground:     0 0% 100%;
+
+  --border:                 180 25% 90%;
+  --input:                  180 25% 90%;
+  --ring:                   174 72% 42%;
+
+  /* ── Shape ── */
+  --radius: 1.25rem;
+
+  /* ── Gradients ── */
+  --gradient-primary:   linear-gradient(135deg, hsl(174 72% 42%), hsl(158 70% 60%));
+  --gradient-soft:      linear-gradient(160deg, hsl(180 60% 96%), hsl(152 60% 94%));
+  --gradient-emergency: linear-gradient(135deg, hsl(8 78% 58%), hsl(20 90% 62%));
+  --gradient-hero:
+    radial-gradient(circle at 20% 0%, hsl(158 70% 60% / 0.25), transparent 50%),
+    radial-gradient(circle at 80% 100%, hsl(174 72% 42% / 0.20), transparent 50%),
+    linear-gradient(180deg, hsl(180 33% 98%), hsl(180 40% 95%));
+  --gradient-deep: linear-gradient(160deg, hsl(188 60% 12%), hsl(174 60% 18%));
+
+  /* ── Shadows ── */
+  --shadow-soft:      0 4px 24px -8px hsl(174 60% 30% / 0.15);
+  --shadow-card:      0 8px 32px -12px hsl(174 50% 25% / 0.18);
+  --shadow-glow:      0 0 60px hsl(158 70% 60% / 0.45);
+  --shadow-emergency: 0 12px 40px -8px hsl(8 78% 58% / 0.45);
+
+  /* ── Motion ── */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark {
+  --background:             188 50% 6%;
+  --foreground:             180 30% 96%;
+
+  --card:                   188 45% 9%;
+  --card-foreground:        180 30% 96%;
+
+  --popover:                188 45% 9%;
+  --popover-foreground:     180 30% 96%;
+
+  --primary:                158 70% 55%;
+  --primary-foreground:     188 60% 8%;
+
+  --accent:                 152 60% 50%;
+  --accent-foreground:      188 60% 8%;
+
+  --secondary:              188 40% 14%;
+  --secondary-foreground:   180 30% 96%;
+
+  --muted:                  188 40% 14%;
+  --muted-foreground:       180 15% 65%;
+
+  --border:                 188 40% 16%;
+  --input:                  188 40% 16%;
+  --ring:                   158 70% 55%;
+}

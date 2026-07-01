@@ -7,14 +7,13 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./css": "./dist/tokens.css"
+    "./tokens.css": "./tokens.css"
   },
   "scripts": {
-    "build": "echo \"tokens build not configured yet\"",
-    "clean": "rimraf dist .turbo"
+    "build": "echo \"tokens: no build step needed\"",
+    "clean": "echo \"tokens: nothing to clean\""
   },
   "devDependencies": {
-    "rimraf": "^6.0.1",
     "typescript": "^5.8.3"
   }
 }
