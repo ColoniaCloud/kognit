@@ -1,0 +1,21 @@
+{
+  "name": "kognit",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
