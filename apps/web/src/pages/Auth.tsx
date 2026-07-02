@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Brain, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Loader2 } from "lucide-react";
 import logo from "@/assets/kognit-logo.png";
 
 type Mode = "login" | "signup" | "forgot";
@@ -13,6 +13,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -108,8 +109,24 @@ export default function Auth() {
             <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Email"
               className="w-full px-4 py-3 rounded-xl bg-secondary text-sm font-medium outline-none focus:ring-2 focus:ring-primary" />
             {mode !== "forgot" && (
-              <input type="password" required minLength={6} value={password} onChange={e => setPassword(e.target.value)} placeholder="Contraseña"
-                className="w-full px-4 py-3 rounded-xl bg-secondary text-sm font-medium outline-none focus:ring-2 focus:ring-primary" />
+              <div className="relative">
+                <input
+                  type={showPwd ? "text" : "password"}
+                  required
+                  minLength={6}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Contraseña"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-secondary text-sm font-medium outline-none focus:ring-2 focus:ring-primary"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPwd(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPwd ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              </div>
             )}
 
             <button disabled={loading} type="submit"

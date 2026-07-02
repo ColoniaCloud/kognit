@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -25,9 +26,24 @@ export default function ResetPassword() {
       <form onSubmit={submit} className="w-full max-w-sm bg-card rounded-3xl shadow-card p-7">
         <h1 className="text-2xl font-bold mb-2">Nueva contraseña</h1>
         <p className="text-sm text-muted-foreground mb-5">Definí una nueva clave segura.</p>
-        <input type="password" required minLength={6} value={password} onChange={e => setPassword(e.target.value)}
-          placeholder="Nueva contraseña"
-          className="w-full px-4 py-3 rounded-xl bg-secondary text-sm font-medium outline-none focus:ring-2 focus:ring-primary" />
+        <div className="relative">
+          <input
+            type={showPwd ? "text" : "password"}
+            required
+            minLength={6}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Nueva contraseña"
+            className="w-full px-4 py-3 pr-11 rounded-xl bg-secondary text-sm font-medium outline-none focus:ring-2 focus:ring-primary"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPwd(v => !v)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showPwd ? <EyeOff size={17} /> : <Eye size={17} />}
+          </button>
+        </div>
         <button disabled={loading} className="mt-4 w-full bg-gradient-primary text-primary-foreground font-bold py-3.5 rounded-xl shadow-soft flex items-center justify-center gap-2">
           {loading ? <Loader2 className="animate-spin" size={18} /> : "Actualizar"}
         </button>
