@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { PhoneFrame } from "@/components/kognit/PhoneFrame";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { usePWA } from "@/hooks/use-pwa";
 import { HomeScreen } from "./kognit/Home";
 import { TiltScreen } from "./kognit/Tilt";
 import { CardsScreen } from "./kognit/Cards";
@@ -10,6 +11,8 @@ import { TrackingScreen } from "./kognit/Tracking";
 import { CalendarScreen } from "./kognit/Calendar";
 import { ProfileScreen } from "./kognit/Profile";
 import { BottomNav } from "@/components/kognit/BottomNav";
+import { DesktopNav } from "@/components/kognit/DesktopNav";
+import { InstallGate } from "@/components/kognit/InstallGate";
 
 type Tab = "home" | "cards" | "calendar" | "track" | "profile";
 type View = Tab | "tilt";
@@ -27,6 +30,8 @@ export default function MobileApp() {
   const { user, loading, signOut } = useAuth();
   const [view, setView] = useState<View>("home");
   const [profile, setProfile] = useState<Profile | null>(null);
+  const isMobile = useIsMobile();
+  const { isStandalone, promptInstall } = usePWA();
 
   useEffect(() => {
     if (!user) return;
@@ -57,48 +62,58 @@ export default function MobileApp() {
       case "track":
         return <TrackingScreen />;
       case "profile":
-        return <ProfileScreen
-          name={profile?.display_name ?? "Jugador"}
-          email={user.email ?? ""}
-          focusLevel={profile?.focus_level ?? 60}
-          emotionalControl={profile?.emotional_control ?? 60}
-          totalResets={profile?.total_resets ?? 0}
-          streakDays={profile?.streak_days ?? 0}
-          xp={profile?.xp ?? 0}
-          onSignOut={signOut}
-        />;
+        return (
+          <ProfileScreen
+            name={profile?.display_name ?? "Jugador"}
+            email={user.email ?? ""}
+            focusLevel={profile?.focus_level ?? 60}
+            emotionalControl={profile?.emotional_control ?? 60}
+            totalResets={profile?.total_resets ?? 0}
+            streakDays={profile?.streak_days ?? 0}
+            xp={profile?.xp ?? 0}
+            onSignOut={signOut}
+          />
+        );
       default:
-        return <HomeScreen
-          name={profile?.display_name ?? "Jugador"}
-          onTilt={goTilt}
-          onCards={() => setView("cards")}
-          onTrack={() => setView("track")}
-        />;
+        return (
+          <HomeScreen
+            name={profile?.display_name ?? "Jugador"}
+            onTilt={goTilt}
+            onCards={() => setView("cards")}
+            onTrack={() => setView("track")}
+          />
+        );
     }
   })();
 
-  // Mobile-first: full screen on phones, framed on desktop
+  // Desktop: proper web layout with top nav
+  if (!isMobile) {
+    return (
+      <div className="min-h-screen bg-background">
+        <DesktopNav
+          active={view === "tilt" ? "home" : (view as Tab)}
+          onChange={(tab) => setView(tab)}
+          onSignOut={signOut}
+        />
+        <main className="max-w-[65vw] mx-auto py-6 px-4">
+          {screen}
+        </main>
+      </div>
+    );
+  }
+
+  // Mobile browser (not installed as PWA): require installation
+  if (!isStandalone) {
+    return <InstallGate onPrompt={promptInstall} />;
+  }
+
+  // Mobile PWA (standalone): full-screen native experience
   return (
-    <div className="min-h-screen bg-gradient-hero md:flex md:items-center md:justify-center md:py-8">
-      <div className="md:hidden relative min-h-screen">
-        {screen}
-        {view !== "tilt" && (
-          <BottomNav
-            active={view as Tab}
-            onChange={(k) => setView(k)}
-          />
-        )}
-      </div>
-      <div className="hidden md:block">
-        <PhoneFrame>
-          <div className="relative h-full">
-            {screen}
-            {view !== "tilt" && (
-              <BottomNav active={view as Tab} onChange={(k) => setView(k)} />
-            )}
-          </div>
-        </PhoneFrame>
-      </div>
+    <div className="relative min-h-screen">
+      {screen}
+      {view !== "tilt" && (
+        <BottomNav active={view as Tab} onChange={(k) => setView(k)} />
+      )}
     </div>
   );
 }
