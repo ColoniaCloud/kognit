@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, Layers, Activity, Calendar, User } from "lucide-react";
 
@@ -15,24 +15,47 @@ const items = [
 interface Props { active: Key; onChange?: (k: Key) => void; }
 
 export const BottomNav = ({ active, onChange }: Props) => {
-  const [hovered, setHovered] = useState<Key | null>(null);
+  const [tooltip, setTooltip] = useState<Key | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const fromClickRef = useRef(false);
+
+  const handleMouseEnter = (key: Key) => {
+    clearTimeout(timerRef.current);
+    setTooltip(key);
+  };
+
+  const handleMouseLeave = () => {
+    if (!fromClickRef.current) setTooltip(null);
+  };
+
+  const handleSelect = (key: Key) => {
+    onChange?.(key);
+    fromClickRef.current = true;
+    setTooltip(key);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      fromClickRef.current = false;
+      setTooltip(null);
+    }, 1000);
+  };
 
   return (
     <div className="fixed bottom-6 inset-x-0 flex justify-center z-50 pointer-events-none px-5">
       <div className="relative pointer-events-auto w-full max-w-[400px]">
+
         {/* Tooltip label */}
         <AnimatePresence>
-          {hovered && (
+          {tooltip && (
             <motion.div
-              key={hovered}
+              key={tooltip}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
               className="absolute -top-10 inset-x-0 flex justify-center pointer-events-none"
             >
-              <span className="px-3 py-1.5 rounded-xl bg-background/95 backdrop-blur-xl border border-border/50 text-[12px] font-semibold shadow-card">
-                {items.find(i => i.key === hovered)?.label}
+              <span className="px-3 py-1.5 rounded-xl bg-background/95 backdrop-blur-xl border border-border/50 text-[12px] font-semibold shadow-card whitespace-nowrap">
+                {items.find(i => i.key === tooltip)?.label}
               </span>
             </motion.div>
           )}
@@ -52,9 +75,9 @@ export const BottomNav = ({ active, onChange }: Props) => {
             return (
               <button
                 key={key}
-                onClick={() => onChange?.(key as Key)}
-                onMouseEnter={() => setHovered(key as Key)}
-                onMouseLeave={() => setHovered(null)}
+                onClick={() => handleSelect(key as Key)}
+                onMouseEnter={() => handleMouseEnter(key as Key)}
+                onMouseLeave={handleMouseLeave}
                 className="relative flex flex-col items-center justify-center w-12 h-12 rounded-2xl"
               >
                 {isActive && (

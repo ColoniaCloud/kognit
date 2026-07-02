@@ -86,18 +86,17 @@ export default function MobileApp() {
     }
   })();
 
-  // Desktop: proper web layout with top nav
+  // Desktop: header with logo + floating BottomNav for tab navigation
   if (!isMobile) {
     return (
       <div className="min-h-screen bg-background">
-        <DesktopNav
-          active={view === "tilt" ? "home" : (view as Tab)}
-          onChange={(tab) => setView(tab)}
-          onSignOut={signOut}
-        />
-        <main className="max-w-[65vw] mx-auto py-6 px-4">
+        <DesktopNav onSignOut={signOut} />
+        <main className="max-w-[65vw] mx-auto py-6 px-4 pb-28">
           {screen}
         </main>
+        {view !== "tilt" && (
+          <BottomNav active={view as Tab} onChange={(k) => setView(k)} />
+        )}
       </div>
     );
   }
@@ -109,7 +108,7 @@ export default function MobileApp() {
 
   // Mobile PWA (standalone): full-screen native experience
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       {screen}
       {view !== "tilt" && (
         <BottomNav active={view as Tab} onChange={(k) => setView(k)} />
