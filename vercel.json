@@ -1,9 +1,3 @@
 {
-  "framework": null,
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm --filter @kognit/web build",
-  "outputDirectory": "apps/web/dist",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "installCommand": "pnpm install"
 }
