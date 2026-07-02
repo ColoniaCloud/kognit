@@ -1,5 +1,5 @@
 import { ChevronLeft, Shuffle } from "lucide-react";
-import { BottomNav } from "@/components/kognit/BottomNav";
+
 import { CATEGORIES, MentalCard } from "@/data/mentalCards";
 import { useState } from "react";
 
@@ -38,7 +38,7 @@ export const CardsScreen = ({ onBack }: CardsProps) => {
   };
 
   return (
-    <div className="min-h-full bg-gradient-hero pb-28">
+    <div className="min-h-full bg-background pb-28">
       <div className="px-6 pt-3 flex items-center justify-between">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-card shadow-soft flex items-center justify-center">
           <ChevronLeft size={18} />
@@ -96,7 +96,7 @@ export const CardsScreen = ({ onBack }: CardsProps) => {
         {cat.tagline}
       </p>
 
-      <BottomNav active="cards" />
+
     </div>
   );
 };

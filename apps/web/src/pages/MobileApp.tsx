@@ -39,7 +39,7 @@ export default function MobileApp() {
       .then(({ data }) => data && setProfile(data as any));
   }, [user]);
 
-  if (loading) return <div className="min-h-screen bg-gradient-hero" />;
+  if (loading) return <div className="min-h-screen bg-background" />;
   if (!user) return <Navigate to="/auth" replace />;
 
   const goTilt = async () => {

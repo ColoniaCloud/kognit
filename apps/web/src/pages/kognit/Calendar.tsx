@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Plus, Sparkles } from "lucide-react";
-import { BottomNav } from "@/components/kognit/BottomNav";
+
 
 const days = ["L", "M", "M", "J", "V", "S", "D"];
 // Noviembre 2026 empieza en domingo. Construimos la grilla de 6 semanas.
@@ -43,7 +43,7 @@ const notes = [
 ];
 
 export const CalendarScreen = () => (
-  <div className="min-h-full bg-gradient-hero pb-28">
+  <div className="min-h-full bg-background pb-28">
     {/* Header */}
     <div className="px-6 pt-3 flex items-center justify-between">
       <button className="w-10 h-10 rounded-full bg-card shadow-soft flex items-center justify-center">
@@ -155,6 +155,6 @@ export const CalendarScreen = () => (
       </div>
     </div>
 
-    <BottomNav active="calendar" />
+
   </div>
 );

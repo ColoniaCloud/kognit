@@ -1,5 +1,5 @@
 import { Settings, Award, Flame, Brain, ChevronRight, Bell, Shield, LogOut, Sparkles } from "lucide-react";
-import { BottomNav } from "@/components/kognit/BottomNav";
+
 
 interface ProfileProps {
   name?: string;
@@ -22,7 +22,7 @@ export const ProfileScreen = ({
   xp = 0,
   onSignOut,
 }: ProfileProps) => (
-  <div className="min-h-full bg-gradient-hero pb-28">
+  <div className="min-h-full bg-background pb-28">
     <div className="px-6 pt-3 flex items-center justify-between">
       <p className="text-sm font-bold">Perfil</p>
       <button className="w-10 h-10 rounded-full bg-card shadow-soft flex items-center justify-center"><Settings size={16} /></button>
@@ -116,6 +116,6 @@ export const ProfileScreen = ({
       ))}
     </div>
 
-    <BottomNav active="profile" />
+
   </div>
 );

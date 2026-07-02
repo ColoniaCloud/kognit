@@ -1,5 +1,4 @@
 import { AlertOctagon, Layers, Activity, ChevronRight, Bell, TrendingUp } from "lucide-react";
-import { BottomNav } from "@/components/kognit/BottomNav";
 import mascot from "@/assets/kognit-mascot.png";
 
 const states = [
@@ -17,7 +16,7 @@ interface HomeProps {
 }
 
 export const HomeScreen = ({ name = "Jugador", onTilt, onCards, onTrack }: HomeProps) => (
-  <div className="min-h-full bg-gradient-hero pb-28">
+  <div className="min-h-full bg-background pb-28">
     <div className="px-6 pt-3 flex items-center justify-between">
       <div>
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Sesión activa</p>
@@ -71,7 +70,6 @@ export const HomeScreen = ({ name = "Jugador", onTilt, onCards, onTrack }: HomeP
       <ToolCard icon={TrendingUp} title="Progreso" subtitle="Foco · control" onClick={onTrack} />
     </div>
 
-    <BottomNav active="home" />
   </div>
 );
 

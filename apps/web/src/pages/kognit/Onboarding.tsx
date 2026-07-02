@@ -11,7 +11,7 @@ const goals = [
 const triggers = ["Bad beats", "Sesiones largas", "Rivales agresivos", "Downswings"];
 
 export const OnboardingScreen = () => (
-  <div className="min-h-full bg-gradient-hero px-6 pt-6 pb-10">
+  <div className="min-h-full bg-background px-6 pt-6 pb-10">
     <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
       <span>Paso 2 de 4</span>
       <button className="text-primary">Saltar</button>
