@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirma tu cuenta · kognit</title>
+  <style>
+    body { margin: 0; padding: 0; background: #f0fdfa; font-family: 'Manrope', Arial, sans-serif; color: #134e4a; }
+    .wrap { max-width: 480px; margin: 40px auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 32px -12px rgba(20,169,147,.18); }
+    .header { background: linear-gradient(135deg, #14a993, #34d399); padding: 36px 40px 28px; text-align: center; }
+    .header h1 { margin: 0; color: #fff; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+    .header p { margin: 4px 0 0; color: rgba(255,255,255,.8); font-size: 13px; }
+    .body { padding: 36px 40px; }
+    .body p { font-size: 15px; line-height: 1.6; margin: 0 0 20px; }
+    .btn { display: block; text-align: center; background: linear-gradient(135deg, #14a993, #34d399); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 15px; padding: 14px 32px; border-radius: 14px; margin: 28px 0; }
+    .note { font-size: 12px; color: #6b7280; line-height: 1.5; }
+    .footer { padding: 20px 40px; text-align: center; font-size: 12px; color: #9ca3af; border-top: 1px solid #f0fdfa; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>kognit</h1>
+      <p>Coach de rendimiento mental</p>
+    </div>
+    <div class="body">
+      <p>Hola 👋</p>
+      <p>Gracias por registrarte en <strong>kognit</strong>. Confirmá tu dirección de email para activar tu cuenta y empezar a entrenar tu ventaja mental.</p>
+      <a class="btn" href="{{ .ConfirmationURL }}">Confirmar mi cuenta</a>
+      <p class="note">Si no creaste esta cuenta, podés ignorar este email con tranquilidad. El link expira en 24 horas.</p>
+    </div>
+    <div class="footer">© 2026 kognit · Colonia Cloud</div>
+  </div>
+</body>
+</html>
