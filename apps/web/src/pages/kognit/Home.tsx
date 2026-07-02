@@ -1,3 +1,4 @@
+import React from "react";
 import { AlertOctagon, Layers, Activity, ChevronRight, Bell, TrendingUp } from "lucide-react";
 import mascot from "@/assets/kognit-mascot.png";
 
@@ -73,7 +74,15 @@ export const HomeScreen = ({ name = "Jugador", onTilt, onCards, onTrack }: HomeP
   </div>
 );
 
-const ToolCard = ({ icon: Icon, title, subtitle, gradient, onClick }: any) => (
+interface ToolCardProps {
+  icon: React.ElementType;
+  title: string;
+  subtitle: string;
+  gradient?: boolean;
+  onClick?: () => void;
+}
+
+const ToolCard = ({ icon: Icon, title, subtitle, gradient, onClick }: ToolCardProps) => (
   <button onClick={onClick} className={`p-4 rounded-2xl text-left transition-all active:scale-95 ${gradient ? "bg-gradient-primary text-primary-foreground shadow-soft" : "bg-card shadow-soft"}`}>
     <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${gradient ? "bg-white/20" : "bg-secondary text-primary"}`}>
       <Icon size={18} />

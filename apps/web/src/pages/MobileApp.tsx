@@ -36,7 +36,7 @@ export default function MobileApp() {
   useEffect(() => {
     if (!user) return;
     supabase.from("profiles").select("*").eq("id", user.id).maybeSingle()
-      .then(({ data }) => data && setProfile(data as any));
+      .then(({ data }) => data && setProfile(data as Profile));
   }, [user]);
 
   if (loading) return <div className="min-h-screen bg-background" />;

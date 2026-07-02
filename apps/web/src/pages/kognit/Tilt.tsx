@@ -52,15 +52,20 @@ export const TiltScreen = ({ onExit }: TiltProps) => {
   const [count, setCount] = useState(1);
 
   // grounding state
-  const groundingQs = useMemo(() => [GROUNDING_Q[Math.floor(Math.random() * GROUNDING_Q.length)], GROUNDING_Q[Math.floor(Math.random() * GROUNDING_Q.length)]], [stage === "grounding"]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const groundingQs = useMemo(() => [GROUNDING_Q[Math.floor(Math.random() * GROUNDING_Q.length)], GROUNDING_Q[Math.floor(Math.random() * GROUNDING_Q.length)]], [stage]);
   const [gIdx, setGIdx] = useState(0);
 
-  const exitText = useMemo(() => EXIT_INSTRUCTIONS[Math.floor(Math.random() * EXIT_INSTRUCTIONS.length)], [stage === "exit"]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const exitText = useMemo(() => EXIT_INSTRUCTIONS[Math.floor(Math.random() * EXIT_INSTRUCTIONS.length)], [stage]);
 
   const beep = (freq = 660) => {
     if (!sound) return;
     try {
-      const Ctx = (window as any).AudioContext || (window as any).webkitAudioContext;
+      type AudioCtorWindow = Window & { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext };
+      const W = window as AudioCtorWindow;
+      const Ctx = W.AudioContext || W.webkitAudioContext;
+      if (!Ctx) return;
       const ctx = new Ctx();
       const o = ctx.createOscillator();
       const g = ctx.createGain();
@@ -70,7 +75,7 @@ export const TiltScreen = ({ onExit }: TiltProps) => {
       g.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.02);
       g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18);
       o.start(); o.stop(ctx.currentTime + 0.2);
-    } catch {}
+    } catch { /* Web Audio API not available */ }
   };
 
   // Breathing engine
@@ -98,6 +103,7 @@ export const TiltScreen = ({ onExit }: TiltProps) => {
     }
     const t = setTimeout(() => setCount(c => c + 1), 1000);
     return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, count, phaseIdx, cycle, mode]);
 
   const startBreath = (m: Mode) => {

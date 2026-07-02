@@ -44,8 +44,9 @@ export default function Auth() {
         toast({ title: "Email enviado", description: "Revisá tu casilla para recuperar tu contraseña." });
         setMode("login");
       }
-    } catch (err: any) {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Error inesperado";
+      toast({ title: "Error", description: msg, variant: "destructive" });
     } finally {
       setLoading(false);
     }

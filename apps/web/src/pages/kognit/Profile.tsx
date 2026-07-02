@@ -1,4 +1,13 @@
+import React from "react";
 import { Settings, Award, Flame, Brain, ChevronRight, Bell, Shield, LogOut, Sparkles } from "lucide-react";
+
+interface SettingRow {
+  i: React.ElementType;
+  l: string;
+  v: string;
+  danger?: boolean;
+  onClick?: () => void;
+}
 
 
 interface ProfileProps {
@@ -100,12 +109,12 @@ export const ProfileScreen = ({
     </div>
 
     <div className="mx-6 mt-5 rounded-3xl bg-card shadow-soft overflow-hidden">
-      {[
+      {([
         { i: Bell, l: "Recordatorios", v: "Diario · 19 hs" },
         { i: Shield, l: "Privacidad", v: "Solo local" },
         { i: Settings, l: "Preferencias", v: "" },
         { i: LogOut, l: "Cerrar sesión", v: "", danger: true, onClick: onSignOut },
-      ].map((r: any, i, arr) => (
+      ] as SettingRow[]).map((r, i, arr) => (
         <button key={r.l} onClick={r.onClick}
           className={`w-full flex items-center gap-3 p-4 ${i !== arr.length - 1 ? "border-b border-border" : ""} ${r.danger ? "text-destructive" : ""}`}>
           <div className="w-9 h-9 rounded-xl bg-secondary flex items-center justify-center text-primary"><r.i size={16} /></div>

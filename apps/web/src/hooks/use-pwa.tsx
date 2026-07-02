@@ -5,11 +5,13 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+type NavigatorStandalone = Navigator & { standalone?: boolean };
+
 function checkStandalone(): boolean {
   if (typeof window === "undefined") return false;
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
-    (window.navigator as any).standalone === true
+    (navigator as NavigatorStandalone).standalone === true
   );
 }
 
@@ -20,7 +22,7 @@ export function usePWA() {
   useEffect(() => {
     const mq = window.matchMedia("(display-mode: standalone)");
     const onMqChange = () =>
-      setIsStandalone(mq.matches || (window.navigator as any).standalone === true);
+      setIsStandalone(mq.matches || (navigator as NavigatorStandalone).standalone === true);
     mq.addEventListener("change", onMqChange);
 
     const onBeforeInstall = (e: Event) => {

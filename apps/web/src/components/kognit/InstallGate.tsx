@@ -1,9 +1,11 @@
 import { Share, Smartphone } from "lucide-react";
 
+type WindowWithMSStream = Window & { MSStream?: unknown };
+
 const isIOS =
   typeof navigator !== "undefined" &&
   /iPhone|iPad|iPod/.test(navigator.userAgent) &&
-  !(window as any).MSStream;
+  !(window as WindowWithMSStream).MSStream;
 
 interface Props {
   onPrompt?: () => Promise<boolean>;
