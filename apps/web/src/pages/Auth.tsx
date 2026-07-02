@@ -26,10 +26,11 @@ export default function Auth() {
         if (error) throw error;
         navigate("/app");
       } else if (mode === "signup") {
+        const appUrl = import.meta.env.VITE_APP_URL ?? window.location.origin;
         const { error } = await supabase.auth.signUp({
           email, password,
           options: {
-            emailRedirectTo: `${window.location.origin}/app`,
+            emailRedirectTo: `${appUrl}/app`,
             data: { display_name: name || email.split("@")[0] },
           },
         });
@@ -37,8 +38,9 @@ export default function Auth() {
         toast({ title: "Cuenta creada", description: "Revisá tu email para confirmar." });
         setMode("login");
       } else {
+        const appUrl = import.meta.env.VITE_APP_URL ?? window.location.origin;
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/reset-password`,
+          redirectTo: `${appUrl}/reset-password`,
         });
         if (error) throw error;
         toast({ title: "Email enviado", description: "Revisá tu casilla para recuperar tu contraseña." });
@@ -54,12 +56,7 @@ export default function Auth() {
 
   const guest = async () => {
     setLoading(true);
-    const rand = Math.random().toString(36).slice(2, 10);
-    const { error } = await supabase.auth.signUp({
-      email: `guest_${rand}@kognit.app`,
-      password: `Guest_${rand}_${Date.now()}`,
-      options: { data: { display_name: "Jugador" } },
-    });
+    const { error } = await supabase.auth.signInAnonymously();
     setLoading(false);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
